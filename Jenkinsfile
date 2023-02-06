@@ -9,7 +9,7 @@ pipeline{
             steps{
                 echo "building..."
                 sh '''
-                pip3 install -r requirements.txt
+                pip install -r requirements.txt
                 '''
             }
         }
@@ -17,7 +17,7 @@ pipeline{
             steps{
                 echo "Testing..."
                 sh '''
-                python3 views.py
+                python views.py
                 ''' 
             }
         }
