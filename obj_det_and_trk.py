@@ -70,6 +70,7 @@ def compare(img):
         frame2 = d
         first_gray = cv2.cvtColor(frame1, cv2.COLOR_BGR2GRAY)
         second_gray = cv2.cvtColor(frame2, cv2.COLOR_BGR2GRAY)
+        cv2.imshow("de",cv2.absdiff(first_gray,second_gray))
         score, diff = structural_similarity(first_gray, second_gray, full=True)
         #print("Similarity Score: {:.3f}%".format(score * 100))
         diff = (diff * 255).astype("uint8")
@@ -77,6 +78,17 @@ def compare(img):
         print(score_)
         #if score_ < 50:
         #    print("fall---detected---!!!")
+        
+         img1 = img
+        img_contour = img1.copy()
+
+        img_blur = cv2.GaussianBlur(img1, (7, 7), 1)
+        img_gray = cv2.cvtColor(img_blur, cv2.COLOR_BGR2GRAY)
+        img_canny = cv2.Canny(img_gray, 50, 400)
+        cv2.imshow("d",img_canny)
+        kernel = np.ones((3))
+        img_dilated = cv2.dilate(img_canny, kernel, iterations=1)
+        cv2.imshow("e",img_dilated)
 """Function to Draw Bounding boxes"""
 def draw_boxes(img, bbox, identities=None, categories=None, 
                 names=None, color_box=None,offset=(0, 0), b=[]):
@@ -90,56 +102,6 @@ def draw_boxes(img, bbox, identities=None, categories=None,
         id = int(identities[i]) if identities is not None else 0
         data = (int((box[0]+box[2])/2),(int((box[1]+box[3])/2)))
         label = str(id)
-        b.append(img)
-        print(len(b))
-        with open ("out.txt","a") as f:
-            f.write(str(b))
-            f.write("\n")
-            f.write("\n")
-            f.close()
-        '''
-        #frame1 = cv2.cvtColor(frame1, cv2.COLOR_BGR2GRAY)
-            #frame2 = cv2.cvtColor(frame2, cv2.COLOR_BGR2GRAY)
-            destination_image = cv2.absdiff(frame1, frame2)
-            #cv2.imshow("de",destination_image)
-            def preprocess_image1(frame1):
-                bilateral_filtered_image = cv2.bilateralFilter(frame1, 7, 150, 150)
-                gray_image1 = cv2.cvtColor(bilateral_filtered_image, cv2.COLOR_BGR2GRAY)
-                return gray_image1
-            def preprocess_image2(frame2):
-                bilateral_filtered_image = cv2.bilateralFilter(frame2, 7, 150, 150)
-                gray_image2 = cv2.cvtColor(bilateral_filtered_image, cv2.COLOR_BGR2GRAY)
-                return gray_image2
-            image_sub = cv2.absdiff(frame1, frame2)
-            kernel = np.ones((5,5),np.uint8)
-            close_operated_image = cv2.morphologyEx(image_sub, cv2.MORPH_CLOSE, kernel)
-            _, thresholded = cv2.threshold(close_operated_image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-
-            median = cv2.medianBlur(thresholded, 5)
-            _, contours, _ = cv2.findContours(median, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-            cv2.drawContours(image_sub, contours, -1, (100, 0, 255),2)
-            _, _, angle = cv2.fitEllipse(contours)
-            
-        frame1 = b
-        frame2 = b
-        frame1 = cv2.cvtColor(frame1, cv2.COLOR_BGR2GRAY)
-        frame2 = cv2.cvtColor(frame2, cv2.COLOR_BGR2GRAY)
-        def mse(frame1, frame2):
-            h, w = frame1.shape
-            diff = cv2.subtract(frame1, frame2)
-            err = np.sum(diff**2)
-            mse = err/(float(h*w))
-            return mse, diff
-
-        error, diff = mse(frame1, frame2)
-        print("Image matching Error between the two images:",error)
-
-        cv2.imshow("difference", diff)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()'''
-       
-        cv2.imshow("de", b[0])
-        cv2.imshow("de1", b[1])
 
 
         if color_box:
