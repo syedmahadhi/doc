@@ -55,7 +55,28 @@ def bbox_rel(*xyxy):
     h = bbox_h
     return x_c, y_c, w, h
 
-
+b =[]
+count = 0
+def compare(img):
+    e = 6
+    b.append(img)
+    #print(len(b))
+    if len(b)>e:
+        c = b[len(b)-6]
+        d = b[len(b)-1]
+        cv2.imshow("c", c)
+        cv2.imshow("d",d)
+        frame1 = c
+        frame2 = d
+        first_gray = cv2.cvtColor(frame1, cv2.COLOR_BGR2GRAY)
+        second_gray = cv2.cvtColor(frame2, cv2.COLOR_BGR2GRAY)
+        score, diff = structural_similarity(first_gray, second_gray, full=True)
+        #print("Similarity Score: {:.3f}%".format(score * 100))
+        diff = (diff * 255).astype("uint8")
+        score_ = score*100
+        print(score_)
+        #if score_ < 50:
+        #    print("fall---detected---!!!")
 """Function to Draw Bounding boxes"""
 def draw_boxes(img, bbox, identities=None, categories=None, 
                 names=None, color_box=None,offset=(0, 0), b=[]):
@@ -286,6 +307,7 @@ def detect(weights=ROOT / 'yolov5n.pt',
                     identities = tracked_dets[:, 8]
                     categories = tracked_dets[:, 4]
                     draw_boxes(im0, bbox_xyxy, identities, categories, names,color_box)
+                    compare(im0)
                         
                 
                 
