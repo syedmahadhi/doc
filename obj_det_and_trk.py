@@ -77,6 +77,28 @@ def draw_boxes(img, bbox, identities=None, categories=None,
             f.write("\n")
             f.close()
         '''
+        #frame1 = cv2.cvtColor(frame1, cv2.COLOR_BGR2GRAY)
+            #frame2 = cv2.cvtColor(frame2, cv2.COLOR_BGR2GRAY)
+            destination_image = cv2.absdiff(frame1, frame2)
+            #cv2.imshow("de",destination_image)
+            def preprocess_image1(frame1):
+                bilateral_filtered_image = cv2.bilateralFilter(frame1, 7, 150, 150)
+                gray_image1 = cv2.cvtColor(bilateral_filtered_image, cv2.COLOR_BGR2GRAY)
+                return gray_image1
+            def preprocess_image2(frame2):
+                bilateral_filtered_image = cv2.bilateralFilter(frame2, 7, 150, 150)
+                gray_image2 = cv2.cvtColor(bilateral_filtered_image, cv2.COLOR_BGR2GRAY)
+                return gray_image2
+            image_sub = cv2.absdiff(frame1, frame2)
+            kernel = np.ones((5,5),np.uint8)
+            close_operated_image = cv2.morphologyEx(image_sub, cv2.MORPH_CLOSE, kernel)
+            _, thresholded = cv2.threshold(close_operated_image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+
+            median = cv2.medianBlur(thresholded, 5)
+            _, contours, _ = cv2.findContours(median, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+            cv2.drawContours(image_sub, contours, -1, (100, 0, 255),2)
+            _, _, angle = cv2.fitEllipse(contours)
+            
         frame1 = b
         frame2 = b
         frame1 = cv2.cvtColor(frame1, cv2.COLOR_BGR2GRAY)
