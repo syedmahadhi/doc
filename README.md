@@ -10,3 +10,4 @@ https://colab.research.google.com/github/dzlab/notebooks/blob/master/_notebooks/
 train retinanet https://medium.com/@van.evanfebrianto/how-to-train-custom-object-detection-models-using-retinanet-aeed72f5d701  && https://towardsdatascience.com/retinanet-custom-object-detection-training-with-5-lines-of-code-37442640d142
 
 inference https://github.com/Samjith888/Keras-retinanet-Training-on-custom-datasets-for-Object-Detection- && https://github.com/abdelrahman-gaber/tf2-object-detection-api-tutorial
+color https://www.youtube.com/watch?v=t71sQ6WY7L4
