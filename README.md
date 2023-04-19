@@ -11,3 +11,8 @@ train retinanet https://medium.com/@van.evanfebrianto/how-to-train-custom-object
 
 inference https://github.com/Samjith888/Keras-retinanet-Training-on-custom-datasets-for-Object-Detection- && https://github.com/abdelrahman-gaber/tf2-object-detection-api-tutorial
 color https://www.youtube.com/watch?v=t71sQ6WY7L4
+
+
+
+
+https://tensorflow-object-detection-api-tutorial.readthedocs.io/en/latest/training.html#
